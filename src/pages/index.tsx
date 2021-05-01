@@ -24,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:3333')
+const socket = io('https://sd-socket.herokuapp.com/')
 socket.on('connect', () => console.log('Connected'))
 
 type TypeOptions = 'rpc_s_lib' | 'rpc_c_lib' | 'webSocket'
