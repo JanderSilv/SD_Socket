@@ -193,7 +193,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
     initialsContainer: {
       height: '100%',
-      maxHeight: 265,
+      minHeight: '35vh',
+      maxHeight: '38vh',
       border: '1px solid gray',
       borderRadius: 5,
       overflow: 'auto',
