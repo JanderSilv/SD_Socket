@@ -54,7 +54,7 @@ const Sockets: React.FC = () => {
     const handleInitials = (newInitials: TypeInitials) => {
       setInitials(prevInitials => [...prevInitials, newInitials])
     }
-    if (selectedOption === 'webSocket') socket.on('initials', handleInitials)
+    socket.on('initials', handleInitials)
     return () => {
       socket.off('initials', handleInitials)
     }
