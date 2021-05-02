@@ -21,8 +21,10 @@ import FormLabel from '@material-ui/core/FormLabel'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+
 import io from 'socket.io-client'
+import AlwaysScrollToBottom from '../components/AlwaysScrollToBottom'
+import useStyles from '../styles'
 
 const socket = io('https://sd-socket.herokuapp.com/')
 // const socket = io('http://localhost:3333')
@@ -42,8 +44,6 @@ const makeOptions = () => ({
 
 const Sockets: React.FC = () => {
   const classes = useStyles()
-
-  const [scrollPosition, setScrollPosition] = useState(0)
   const [options] = useState(makeOptions())
   const [selectedOption, setSelectedOption] = useState<TypeOptions>('rpc_s_lib')
   const [name, setName] = useState('')
@@ -62,24 +62,6 @@ const Sockets: React.FC = () => {
       socket.off('initials_rpc', handleInitials)
     }
   }, [selectedOption])
-
-  const AlwaysScrollToBottom = () => {
-    const elementRef = useRef<HTMLDivElement>()
-    useEffect(() => {
-      if (!checkScrolledUp()) elementRef.current.scrollIntoView()
-    })
-    return <div id="always-scroll-bottom-div" ref={elementRef} />
-  }
-
-  const checkScrolledUp = useCallback(() => {
-    const actualPosition = initialsListRef.current.scrollTop
-    // console.log(actualPosition, scrollPosition)
-    if (actualPosition < scrollPosition) return true
-    else {
-      setScrollPosition(initialsListRef.current.scrollTop)
-      return false
-    }
-  }, [scrollPosition])
 
   const handleSubmit = useCallback(
     (event: FormEvent) => {
@@ -168,7 +150,7 @@ const Sockets: React.FC = () => {
                 </Grid>
               ))}
             </Grid>
-            <AlwaysScrollToBottom />
+            <AlwaysScrollToBottom forwardRef={initialsListRef} />
           </div>
         </Grid>
       </Grid>
@@ -177,44 +159,3 @@ const Sockets: React.FC = () => {
 }
 
 export default Sockets
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    wrapper: {
-      height: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-
-    container: {
-      minHeight: '40vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
-    },
-
-    initialsContainer: {
-      height: '100%',
-      minHeight: '35vh',
-      maxHeight: '38vh',
-      border: '1px solid gray',
-      borderRadius: 5,
-      overflow: 'auto',
-      scrollbarWidth: 'thin',
-      '&::-webkit-scrollbar': {
-        width: '8px',
-        marginLeft: '12px'
-      },
-      '&::-webkit-scrollbar-track': {
-        WebkitBorderRadius: '10px',
-        borderRadius: '10px'
-      },
-      '&::-webkit-scrollbar-thumb': {
-        WebkitBorderRadius: '10px',
-        borderRadius: '10px',
-        background: 'rgba(170,170,170,0.5)'
-      }
-    }
-  })
-)
