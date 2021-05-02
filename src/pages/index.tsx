@@ -25,6 +25,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import io from 'socket.io-client'
 
 const socket = io('https://sd-socket.herokuapp.com/')
+// const socket = io('http://localhost:3333')
 socket.on('connect', () => console.log('Connected'))
 
 type TypeOptions = 'rpc_s_lib' | 'rpc_c_lib' | 'webSocket'
@@ -55,8 +56,10 @@ const Sockets: React.FC = () => {
       setInitials(prevInitials => [...prevInitials, newInitials])
     }
     socket.on('initials', handleInitials)
+    socket.on('initials_rpc', handleInitials)
     return () => {
       socket.off('initials', handleInitials)
+      socket.off('initials_rpc', handleInitials)
     }
   }, [selectedOption])
 
@@ -83,7 +86,7 @@ const Sockets: React.FC = () => {
       event.preventDefault()
       switch (selectedOption) {
         case 'rpc_s_lib':
-          console.log(selectedOption, name)
+          socket.emit('initials_rpc', name)
           break
         case 'rpc_c_lib':
           console.log(selectedOption, name)
