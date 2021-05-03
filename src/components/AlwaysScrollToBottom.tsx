@@ -11,7 +11,6 @@ const AlwaysScrollToBottom = ({ forwardRef }: Props): JSX.Element => {
 
   const checkScrolledUp = useCallback(() => {
     const actualPosition = forwardRef.current.scrollTop
-    console.log(actualPosition, scrollPosition)
     if (actualPosition < scrollPosition) return true
     else {
       setScrollPosition(forwardRef.current.scrollTop)

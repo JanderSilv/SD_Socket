@@ -38,7 +38,7 @@ type TypeInitials = {
 
 const makeOptions = () => ({
   rpc_s_lib: 'RPC (s/ lib)',
-  rpc_c_lib: 'RPC (c/ lib)',
+  rpc_c_lib: 'RPC (gRPC)',
   webSocket: 'WebSockets'
 })
 
@@ -57,9 +57,11 @@ const Sockets: React.FC = () => {
     }
     socket.on('initials', handleInitials)
     socket.on('initials_rpc', handleInitials)
+    socket.on('initials_grpc', handleInitials)
     return () => {
       socket.off('initials', handleInitials)
       socket.off('initials_rpc', handleInitials)
+      socket.off('initials_grpc', handleInitials)
     }
   }, [selectedOption])
 
@@ -71,7 +73,7 @@ const Sockets: React.FC = () => {
           socket.emit('initials_rpc', name)
           break
         case 'rpc_c_lib':
-          console.log(selectedOption, name)
+          socket.emit('initials_grpc', name)
           break
         case 'webSocket':
           socket.emit('initials', name)

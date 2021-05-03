@@ -3,6 +3,7 @@
         "RPCs",
         "Roboto",
         "clsx",
+        "grpc",
         "luxon"
     ]
 }
