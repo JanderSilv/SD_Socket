@@ -9,7 +9,7 @@
 ## 💡: Funcionalidades
 Foram desenvolvidos 3 servidores.
 1. Servidor RPC desenvolvido na Linguagem C
-2. Servidor RPC utilizando NodeJs
+2. Servidor gRPC utilizando NodeJs
 3. Servidor HTTP utilizando NodeJs e WebSockets
 
 A aplicação permite o usuário escolher o protocolo/tecnologia que será responsável por lidar com a requisição, digitar o seu nome e retornar as iniciais desse nome e qual o protocolo utilizado.
